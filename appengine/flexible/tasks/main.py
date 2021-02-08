@@ -16,6 +16,9 @@
 
 # [START cloud_tasks_appengine_quickstart]
 from flask import Flask, request
+from . import GCS
+import os
+import json
 
 app = Flask(__name__)
 
@@ -24,6 +27,15 @@ app = Flask(__name__)
 def example_task_handler():
     """Log the request payload."""
     payload = request.get_data(as_text=True) or '(empty payload)'
+
+
+    bucket_name = os.environ[ 'BUCKET_NAME' ]
+    txt = 'here is the payload: ' + json.dumps( txt ) + '***'
+
+    GCS.upload_blob_from_string( bucket_name, 'exam_task_handler.... begin', 'h1.txt' ):
+    GCS.upload_blob_from_string( bucket_name, txt, 'h2.txt' ):
+
+
     print('Received task with payload: {}'.format(payload))
     return 'Printed task payload: {}'.format(payload)
 # [END cloud_tasks_appengine_quickstart]
